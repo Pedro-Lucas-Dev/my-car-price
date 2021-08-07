@@ -9,4 +9,4 @@ const Text = ({ variant, color, description }) => {
   );
 };
 
-export default Text;
+export { Text };

@@ -5,4 +5,4 @@ const Layout = ({ children }) => {
   return <Grid container>{children}</Grid>;
 };
 
-export default Layout;
+export { Layout };
