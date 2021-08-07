@@ -1,8 +1,12 @@
+import React from "react";
+import Layout from "../../components/Layout";
+import Header from "../../components/Header";
+
 const Main = () => {
   return (
-    <div>
-      <p>Welcome</p>
-    </div>
+    <Layout>
+      <Header />
+    </Layout>
   );
 };
 
