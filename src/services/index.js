@@ -16,5 +16,10 @@ const getCarVersion = (carMaker, carModel, carYear) => {
     `${BASE_URL}/brands/${carMaker}/models/${carModel}/years/${carYear}/versions`
   );
 };
+const getFullCar = (carMaker, carModel, carYear, carVersion) => {
+  return axios(
+    `${BASE_URL}/brands/${carMaker}/models/${carModel}/years/${carYear}/versions/${carVersion}`
+  );
+};
 
-export { getCarMaker, getCarModel, getCarYear, getCarVersion };
+export { getCarMaker, getCarModel, getCarYear, getCarVersion, getFullCar };
