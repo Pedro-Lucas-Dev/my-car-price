@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { Autocomplete } from "../Autocomplete";
-import { Text } from "../Text";
 import { Box } from "../Box";
 import {
   getCarMaker,
   getCarModel,
   getCarYear,
   getCarVersion,
+  getFullCar,
 } from "../../services";
+import { CarInformations } from "./components/Card";
 
 const Form = () => {
   const DEFAULT_VALUES = {
     carMaker: null,
     carModel: null,
     carYear: null,
-    carVersion: null,
+    carVersion: { versionId: "", version: "" },
   };
   const [data, setData] = useState(DEFAULT_VALUES);
-
   const [carMakerOption, setCarMakerOption] = useState([]);
   const [carModelOption, setCarModelOption] = useState([]);
   const [carYearOption, setCarYearOption] = useState([]);
   const [carVersionOption, setCarVersionOption] = useState([]);
+  const [carInformation, setCarInformation] = useState({});
 
   useEffect(() => {
     getCarMaker().then(({ data }) => {
@@ -43,14 +44,24 @@ const Form = () => {
   }, [data.carMaker, data.carModel]);
 
   useEffect(() => {
-    debugger;
     getCarVersion(data.carMaker, data.carModel, data.carYear).then(
       ({ data }) => {
-        console.log(data);
         setCarVersionOption(data);
       }
     );
   }, [data.carMaker, data.carModel, data.carYear]);
+
+  useEffect(() => {
+    getFullCar(
+      data.carMaker,
+      data.carModel,
+      data.carYear,
+      data.carVersion.versionId
+    ).then(({ data }) => {
+      console.log(data);
+      setCarInformation(data);
+    });
+  }, [data.carMaker, data.carModel, data.carYear, data.carVersion]);
 
   const HandleChangeData = (key, value) => {
     setData({ ...data, [key]: value });
@@ -95,11 +106,12 @@ const Form = () => {
             value={data.carVersion}
             disabled={!data.carYear}
             options={carVersionOption}
+            getOptionLabel={(option) => option.version}
             onChange={(e, value) => HandleChangeData("carVersion", value)}
           />
         </Grid>
         <Grid item>
-          <Text description="Conteúdo" />
+          <CarInformations car={carInformation} />
         </Grid>
       </Grid>
     </Box>
