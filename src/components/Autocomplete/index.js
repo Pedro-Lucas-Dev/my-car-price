@@ -10,7 +10,6 @@ const Autocomplete = ({ id, value, options, label, onChange, disabled }) => {
         value={value}
         options={options}
         groupBy={(option) => option[0].toUpperCase()}
-        getOptionLabel={(option) => option}
         style={{ margin: 10, padding: 10, width: 300 }}
         onChange={onChange}
         renderInput={(params) => (
